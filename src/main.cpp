@@ -1,15 +1,17 @@
+#include <TFT_eSPI.h>
+#include <SPI.h>
 
-// Code cơ bản nháy LED trên ESP32
-
-#define LED_PIN 2  // Chân GPIO có LED tích hợp
+TFT_eSPI tft = TFT_eSPI();
 
 void setup() {
-  pinMode(LED_PIN, OUTPUT); // Cấu hình chân LED là OUTPUT
+  tft.init();
+  tft.setRotation(1);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextSize(2);
+  tft.setCursor(10, 10);
+  tft.println("Hello ESP32!");
 }
 
 void loop() {
-  digitalWrite(LED_PIN, HIGH); // Bật LED
-  delay(500);                  // Chờ 500ms
-  digitalWrite(LED_PIN, LOW);  // Tắt LED
-  delay(500);                  // Chờ 500ms
 }
