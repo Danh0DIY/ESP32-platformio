@@ -4,12 +4,12 @@
 TFT_eSPI tft = TFT_eSPI();
 
 int x; // Tọa độ X của chữ
-String text = "Hello from ESP32!"; // Nội dung chữ
+String text = "Hello Nhung an khuu!"; // Nội dung chữ
 int textWidth;
 
 void setup() {
   tft.init();
-  tft.setRotation(1); // Ngang
+  tft.setRotation(0); // Ngang
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(2);
