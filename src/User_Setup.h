@@ -1,7 +1,7 @@
 // ======= Loại màn hình =======
 #define ST7735_DRIVER
-#define TFT_WIDTH  160
-#define TFT_HEIGHT 80
+#define TFT_WIDTH  80
+#define TFT_HEIGHT 160
 
 // ======= Chân kết nối ESP32 =======
 #define TFT_MOSI 18  // SDA
