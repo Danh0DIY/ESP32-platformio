@@ -1,24 +1,17 @@
 #define ST7735_DRIVER
+#define TFT_WIDTH  160
+#define TFT_HEIGHT 80
 
-#define TFT_WIDTH  80
-#define TFT_HEIGHT 160
-
-#define ST7735_GREENTAB160x80
-
-#define TFT_MISO -1
-#define TFT_MOSI 23
-#define TFT_SCLK 18
+// Chân kết nối
+#define TFT_MOSI 18
+#define TFT_SCLK 5
 #define TFT_CS   22
 #define TFT_DC   21
 #define TFT_RST  19
-#define TFT_BL   -1
+#define TFT_BL   -1 // bỏ qua, vì đã nối thẳng 3V3
 
-#define LOAD_GLCD
-#define LOAD_FONT2
-#define LOAD_FONT4
-#define LOAD_FONT6
-#define LOAD_FONT7
-#define LOAD_FONT8
-#define LOAD_GFXFF
+// Loại LCD
+#define ST7735_GREENTAB160x80
 
-#define SMOOTH_FONT
+// Tốc độ SPI
+#define SPI_FREQUENCY  27000000
