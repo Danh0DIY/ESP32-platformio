@@ -1,22 +1,21 @@
-// User_Setup.h - cấu hình chân cho màn hình ST7735 80x160 trên ESP32
+//ESP32 C3
+#define ST7735_DRIVER
+#define ST7735_GREENTAB160x80  // chuẩn cho màn hình 160x80 ST7735S
 
-#define ST7735_DRIVER    // Màn hình ST7735
+#define TFT_WIDTH  80
+#define TFT_HEIGHT 160
 
-#define TFT_WIDTH  160
-#define TFT_HEIGHT 80
+#define TFT_CS   22
+#define TFT_DC   21
+#define TFT_RST  19
 
 #define TFT_MOSI 18
 #define TFT_SCLK 5
-#define TFT_CS   22
-#define TFT_DC   21
-#define TFT_RST  19  // Nếu màn hình không có chân reset, đặt -1
 
-#define TFT_BL   33  // Nếu có chân backlight, chỉnh lại chân này hoặc comment nếu không dùng
+#define TFT_RGB_ORDER TFT_BGR     // nếu màu sai, thử đổi sang TFT_RGB
+#define TFT_INVERSION_ON          // hoặc _OFF nếu bị âm
 
-// SPI frequency settings
-#define SPI_FREQUENCY  40000000  // 40 MHz SPI speed, có thể chỉnh thấp hơn nếu lỗi
+#define SPI_FREQUENCY  27000000
+``
 
-// Chọn kiểu màn hình và màu sắc, không cần thay đổi
-#define TFT_RGB_ORDER TFT_RGB  // Một số màn hình dùng TFT_BGR
-
-// Các cấu hình thêm có thể thêm ở đây nếu cần
+Note: Cần chon Huge App trong Tools/Partition Scheme trên Arduino IDE để có được dung lượng 3MB
