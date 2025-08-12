@@ -1,5 +1,7 @@
 // ======= Loại màn hình =======
 #define ST7735_DRIVER
+#define ST7735_GREENTAB160x80
+
 #define TFT_WIDTH  80
 #define TFT_HEIGHT 160
 
