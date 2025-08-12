@@ -3,6 +3,8 @@
 #define ST7735_GREENTAB160x80
 #define TFT_WIDTH  80
 #define TFT_HEIGHT 160
+#define TFT_OFFSET_X 26
+#define TFT_OFFSET_Y 1
 
 // ======= Chân kết nối ESP32 =======
 #define TFT_MOSI 18  // SDA
