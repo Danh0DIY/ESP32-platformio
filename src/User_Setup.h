@@ -1,7 +1,6 @@
 // ======= Loại màn hình =======
 #define ST7735_DRIVER
 #define ST7735_GREENTAB160x80
-
 #define TFT_WIDTH  80
 #define TFT_HEIGHT 160
 
@@ -16,9 +15,8 @@
 // Đèn nền (BLK) nối 3V3 luôn sáng
 
 // ======= Tùy chọn màu =======
-#define TFT_RGB_ORDER TFT_BGR // ST7735S thường là BGR
-#define TFT_INVERSION_ON     // Nếu màu bị đảo thì thử OFF
-
+#define TFT_RGB_ORDER TFT_BGR
+#define TFT_INVERSION_ON
 // ======= Font chữ =======
 #define LOAD_GLCD
 #define LOAD_FONT2
