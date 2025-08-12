@@ -1,39 +1,38 @@
-#include <TFT_eSPI.h>
+#include <TFT_eSPI.h> // Thư viện TFT_eSPI
 #include <SPI.h>
 
-TFT_eSPI tft = TFT_eSPI(); 
+TFT_eSPI tft = TFT_eSPI();
+
+int offsetX = 0;
+int offsetY = 0;
+
+void drawFrameTest() {
+  tft.fillScreen(TFT_BLACK);
+  tft.drawRect(0, 0, tft.width(), tft.height(), TFT_RED);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextSize(1);
+  tft.setCursor(5, 5);
+  tft.printf("OffsetX=%d OffsetY=%d", offsetX, offsetY);
+}
 
 void setup() {
   Serial.begin(115200);
   tft.init();
-  tft.setRotation(0); // Đổi từ 0-3 để test xoay
-  tft.fillScreen(TFT_BLACK);
-
-  // Lấy kích thước
-  int w = tft.width();
-  int h = tft.height();
-
-  // Vẽ khung viền
-  tft.drawRect(0, 0, w, h, TFT_WHITE);
-
-  // Vẽ các đường chéo để nhìn rõ góc
-  tft.drawLine(0, 0, w-1, h-1, TFT_RED);
-  tft.drawLine(w-1, 0, 0, h-1, TFT_RED);
-
-  // Ghi chữ ở các mép
-  tft.setTextColor(TFT_GREEN, TFT_BLACK);
-  tft.drawString("TOP", w/2 - 15, 2, 2);
-  tft.drawString("BOTTOM", w/2 - 30, h - 16, 2);
-  tft.drawString("LEFT", 2, h/2 - 8, 2);
-  tft.drawString("RIGHT", w - 35, h/2 - 8, 2);
-
-  // Ghi thông tin kích thước
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  String info = "W=" + String(w) + " H=" + String(h);
-  tft.drawString(info, w/2 - 30, h/2 - 8, 2);
-
-  Serial.println(info);
+  tft.setRotation(1); // 1 = ngang, 0 = dọc
+  drawFrameTest();
 }
 
 void loop() {
+  // Nhấn phím trên Serial Monitor để thử offset mới
+  if (Serial.available()) {
+    char c = Serial.read();
+    if (c == 'w') offsetY--;
+    if (c == 's') offsetY++;
+    if (c == 'a') offsetX--;
+    if (c == 'd') offsetX++;
+    
+    // Cập nhật màn hình
+    tft.setViewport(offsetX, offsetY, tft.width(), tft.height());
+    drawFrameTest();
+  }
 }
