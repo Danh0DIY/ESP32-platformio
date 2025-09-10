@@ -1,54 +1,47 @@
 #include <Arduino.h>
-#include "BluetoothA2DPSource.h"
 
-BluetoothA2DPSource a2dp_source;
+const int dacPin = 25;  // GPIO25 = DAC1
+const int sampleRate = 8000; // 8kHz sample rate
 
-// Tần số các nốt nhạc (Hz)
-const int NOTE_Cc = 262;
-const int NOTE_Dd = 294;
-const int NOTE_Ee = 330;
-const int NOTE_Ff = 349;
+// Bảng sin 1 chu kỳ (0-255)
+const uint8_t sineTable[64] = {
+  128, 140, 153, 165, 177, 188, 198, 207,
+  214, 220, 225, 228, 230, 231, 230, 228,
+  225, 220, 214, 207, 198, 188, 177, 165,
+  153, 140, 128, 115, 102,  90,  78,  67,
+   57,  48,  41,  35,  30,  27,  25,  24,
+   25,  27,  30,  35,  41,  48,  57,  67,
+   78,  90, 102, 115
+};
 
-int note_frequency = 0;  // nốt hiện tại
-int phase = 0;
+// Hàm phát 1 nốt
+void playTone(float frequency, int duration_ms) {
+  int samplesPerCycle = sampleRate / frequency;
+  int tableStep = (64 * frequency) / sampleRate;
 
-int touchPin = T5; // GPIO33
+  unsigned long start = millis();
+  int i = 0;
 
-// Hàm phát sóng sin
-int32_t get_data(Frame* frame, int32_t frame_count) {
-  if (note_frequency == 0) {
-    for (int i = 0; i < frame_count; i++) {
-      frame[i].channel1 = 0;
-      frame[i].channel2 = 0;
-    }
-    return frame_count;
+  while (millis() - start < duration_ms) {
+    dacWrite(dacPin, sineTable[i % 64]);
+    delayMicroseconds(1000000 / sampleRate);
+    i += tableStep;
   }
-
-  float step = (2 * M_PI * note_frequency) / 44100.0; // lấy mẫu 44.1kHz
-  for (int i = 0; i < frame_count; i++) {
-    int16_t sample = (int16_t)(3000 * sin(phase * step));
-    frame[i].channel1 = sample;
-    frame[i].channel2 = sample;
-    phase++;
-  }
-  return frame_count;
 }
 
 void setup() {
-  Serial.begin(115200);
-  a2dp_source.start("ESP32-Piano", get_data); // kết nối loa bluetooth
+  // Test vài nốt piano
+  playTone(262, 400); // C4
+  delay(100);
+  playTone(294, 400); // D4
+  delay(100);
+  playTone(330, 400); // E4
+  delay(100);
+  playTone(349, 400); // F4
+  delay(100);
+  playTone(392, 600); // G4
 }
 
 void loop() {
-  int touchVal = touchRead(touchPin);
-  Serial.println(touchVal);
-
-  // Chia giá trị cảm ứng ra các nốt
-  if (touchVal < 20)       note_frequency = NOTE_Cc;  // Đô
-  else if (touchVal < 40)  note_frequency = NOTE_Dd;  // Rê
-  else if (touchVal < 60)  note_frequency = NOTE_Ee;  // Mi
-  else if (touchVal < 80)  note_frequency = NOTE_Ff;  // Pha
-  else                     note_frequency = 0;       // không chạm → im lặng
-
-  delay(50);
+  // im lặng
 }
